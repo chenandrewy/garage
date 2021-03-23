@@ -1,5 +1,5 @@
 # 2021 03 Andrew: checking comparison with the RAPS paper
-# test
+# test 3
 
 library(tidyverse)
 library(lubridate)
@@ -8,6 +8,7 @@ library(lubridate)
 # RAPS DATA https://drive.google.com/open?id=0ByAFEgH1yFDCU3dZNWRXb0xZdFU
 old0 = readr::read_csv('https://drive.google.com/uc?export=download&id=0ByAFEgH1yFDCU3dZNWRXb0xZdFU')
 
+old0[1:10] %>% filter(!is.na(BM))
 names(old0)[1:10]
 
 old = old0 %>% transmute(yearm = Year*100+Month,BM)
