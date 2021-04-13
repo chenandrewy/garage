@@ -9,10 +9,10 @@ library(lubridate)
 # Longshort ret wide 'https://drive.google.com/uc?export=download&id=1cEXQ9ko2ZPoC-X1GICE-0-Q_WX7PqxZL'
 
 ### USER ENTRY
-signaltarget = 'AssetGrowth'
-signalbench = 'BM'
+signaltarget = 'IndIPO'
+signalbench = 'IndIPO'
 vol = 5 # % monthly
-years_presamp = 5
+years_presamp = 15
 
 ### IMPORT DATA
 
@@ -31,7 +31,7 @@ ret0 = readr::read_csv('https://drive.google.com/uc?export=download&id=1cEXQ9ko2
 ret0 = ret0 %>% gather(key='signalname',value='ret',-c(date))
 
 
-### DO STUFF
+#### DO STUFF ####
 doctarget = signaldoc1  %>% filter(signalname == signaltarget)
 
 ## standardize and accumulate
@@ -40,13 +40,17 @@ ret1 = ret0 %>%
     ret0 %>% group_by(signalname) %>% summarize(sd = sd(ret,na.rm=T))
   ) %>%
   mutate(retnew = ret/sd*vol) %>%
-  filter(date >= doctarget$sampend - years(years_presamp) ) %>%
+  filter(
+    date >= doctarget$sampend - years(years_presamp)
+    , !is.na(ret)
+  ) %>%
   group_by(signalname) %>% arrange(signalname,date) %>%
   mutate(cret = cumprod(1+retnew/100)) %>%
   ungroup
 
 ## subset and plot
-plotme = ret1 %>% filter(signalname %in% c(signaltarget, signalbench)) 
+plotme = ret1 %>% filter(signalname %in% c(signaltarget, signalbench))
+ 
 
 
 # date cutoffs fix me
