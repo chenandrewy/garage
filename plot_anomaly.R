@@ -55,6 +55,8 @@ plotme = ret1 %>% filter(signalname %in% c(signaltarget, signalbench))
 
 # date cutoffs fix me
 yloc = (max(plotme$cret)-1)/2
+
+
 ggplot(plotme, aes(x=date,y=cret)) +
   geom_line(aes(linetype = signalname, color = signalname)) + 
   xlab("") + ylab('Cummulative Long-Short Return (Monthly Vol = 5%)') +
@@ -64,7 +66,7 @@ ggplot(plotme, aes(x=date,y=cret)) +
   geom_text(aes(x=doctarget$sampend, label="\nOriginal Sample Ends", y=yloc), colour="blue", angle=90)   
 
 
-
+ggsave('plot_anomaly.pdf', width = 6, height = 4)
 
 
 
