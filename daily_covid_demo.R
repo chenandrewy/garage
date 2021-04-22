@@ -32,7 +32,7 @@ transmute(
 agg = all %>% 
   group_by(date) %>% 
   summarize(ret = mean(ret)) %>% 
-  mutate(port = 'mean_of_196_anomalies')
+  mutate(port = 'mean_anomaly')
 
 all = rbind(agg,all)
 
@@ -70,6 +70,7 @@ ggplot(
          , aes(x=date,y=cret)) +
   geom_line(aes(color = port))
 
+small %>% filter(date=='2020-05-29',!is.na(cret)) 
 
 # PLOT SELECTED ====
 
@@ -130,7 +131,7 @@ plotme = all %>%
 
 plotme2 = all %>% 
   filter(
-    port %in% 'mean_of_196_anomalies'
+    port %in% 'mean_anomaly'
   ) %>% 
   filter(date >= '2020-01-01') %>%   
   filter(date <= '2020-05-30') %>%         
@@ -158,7 +159,7 @@ ggplot(plotme, aes(x=date,y=cret)) +
                      ,'c'='black'                     
                      ), 
                    labels = c(
-                     '196 Anomalies'
+                     '193 Anomalies'
                      ,'Average Anomaly'                     
                      ,'CRSP VW'
                      )) +
