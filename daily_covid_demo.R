@@ -82,7 +82,7 @@ signallist =c(
 labellist = c(
   'CRSP Index'
   ,'Book / Market'  
-  ,'Asset Growth'
+  ,'Earnings Surprise'
   , 'Operating Leverage'
 )
 colorlist = c(
