@@ -56,12 +56,12 @@ raw = fread('temp/temp.csv')
 
 cz = raw %>% 
   filter(
-    signalname == 'BMdec', port == 'LS'
+    signalname %in% c('BMdec','BM'), port == 'LS'
     ) %>% 
   transmute(
     yearm = year(as.Date(date))*100 + month(as.Date(date))
     , ret
-    , port = 'cz_ew5'
+    , port = signalname
   ) %>% 
   as_tibble()
 
@@ -71,11 +71,11 @@ both = rbind(ff,cz)
 
 
 info = data.frame(
-  levels      = c('ff_hml', 'ff_vw5', 'ff_ew5', 'cz_ew5')
-  , labels    = c('Ken French HML (FF93)', 'Ken French VW', 'Ken French EW','OpenAP (a la FF92)')
-  , colors    = c('gray', 'black','blue','red')
-  , linetypes = c('solid', 'dashed','solid','twodash')
-  , rank      = c(1,4,3,2)
+  levels      = c('ff_hml', 'ff_vw5', 'ff_ew5', 'BMdec', 'BM')
+  , labels    = c('Ken French HML (FF93)', 'Ken French VW', 'Ken French EW','Open AP BMdec (a la FF92)','Open AP BM (a la RRL85)')
+  , colors    = c('gray', 'black','blue','red','magenta')
+  , linetypes = c('solid', 'dashed','solid','twodash','dotted')
+  , rank      = c(1,5,4,2,3)
 ) %>% arrange(rank)
 
 plotme = both %>% 
@@ -99,6 +99,7 @@ ggplot(
   , aes(x=date, y=cret, group=port)) +
   geom_line(aes(linetype = port, color = port), size = 0.75) +
   ylab('Cumulative Return on Value (%)')+
+  ggtitle('Implementation Matters') +
   theme_minimal(base_size = 18) +
   theme(
     legend.title = element_blank()
