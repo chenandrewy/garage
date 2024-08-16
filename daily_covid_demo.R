@@ -1,3 +1,5 @@
+# testing
+
 # plot anomaly returns during the Covid crash.  Andrew Chen 2021 04
 # to set up, 
 # unzip PredictorVW.zip from here: https://drive.google.com/drive/folders/1dLxJerlU1mMpgFL6ODhTQisuNBuaj-_v
